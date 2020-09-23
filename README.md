@@ -126,7 +126,7 @@ const SomeSeriousData = () => {
 ```javascript
 const SomeSeriousData = () => {
   
-    const calculateSomeSeriousData = useMemo((number) => {
+    const calculateSomeSeriousData = React.useMemo((number) => {
         /*
         чистая функция, которая, при одинаковом number,
         всегда выдает один и тот же результат,
