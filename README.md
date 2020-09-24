@@ -23,7 +23,7 @@ ___
 
 ```javascript
 const MyComponent = React.memo(function MyComponent(props) {
-    /* рендер с использованием пропсов */<br>
+    /* рендер с использованием пропсов *
 })
 ```
 
