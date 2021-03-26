@@ -2,9 +2,10 @@ import {ButtonBase, makeStyles, Paper, Theme, Typography} from "@material-ui/cor
 import React, {FC} from 'react'
 import {green} from "@material-ui/core/colors";
 import cn from 'classnames'
+import {animated, config, Spring} from "react-spring";
 
 const useStyles = makeStyles((theme: Theme) => ({
-    root: {
+    paper: {
         height: 64,
         width: 64,
         display: 'grid',
@@ -28,22 +29,36 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }))
 
+interface Position {
+    top: number,
+    left: number
+}
+
 interface Props {
     value: number
     selected?: boolean
     onClick?: () => void
+    position: Position
 }
 
-const Element: FC<Props> = ({value, selected, onClick}) => {
+const Element: FC<Props> = ({value, selected, onClick, position}) => {
     const classes = useStyles()
 
     return (
-        <Paper elevation={3} className={cn(classes.root, {[classes.selected]: selected})}>
-            <ButtonBase onClick={onClick}
-                        className={classes.buttonBase}>
-                <Typography variant={'h4'}>{value}</Typography>
-            </ButtonBase>
-        </Paper>
+        <Spring
+            config={config.gentle}
+            from={{transform: `translate(${position.left}px, ${position.top}px)`}}
+            to={{transform: `translate(0px, 0px)`}}>
+            {props => <animated.div style={props}>
+                <Paper elevation={3}
+                       className={cn(classes.paper, {[classes.selected]: selected})}>
+                    <ButtonBase onClick={() => console.log(DOMRect)}
+                                className={classes.buttonBase}>
+                        <Typography variant={'h4'}>{value}</Typography>
+                    </ButtonBase>
+                </Paper>
+            </animated.div>}
+        </Spring>
     )
 }
 

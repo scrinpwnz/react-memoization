@@ -1,30 +1,31 @@
 import {Theme, makeStyles} from "@material-ui/core";
-import React, {createRef, FC, RefObject, useEffect, useState} from 'react'
-import Element from "./Element";
+import React, {createRef, Dispatch, FC, RefObject, SetStateAction, useEffect, useState} from 'react'
+import MyElement from "./Element";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         display: 'flex',
-        height: 62,
+        height: 64,
         background: 'wheat',
         gap: theme.spacing(.5)
     },
     spot: {
-        width: 62,
-        height: 62,
+        width: 64,
+        height: 64,
         background: 'crimson'
     }
 }))
 
 interface Props {
     length: number
+    setTarget: Dispatch<SetStateAction<Element | undefined>>
 }
 
 const createRefMap = (length: number) => {
-    return Array.from({length}).map(item => createRef<HTMLDivElement>())
+    return Array.from({length}).map(_ => createRef<HTMLDivElement>())
 }
 
-const InitialArray: FC<Props> = ({length}) => {
+const InitialArray: FC<Props> = ({length, setTarget}) => {
 
     const classes = useStyles()
 
@@ -34,10 +35,6 @@ const InitialArray: FC<Props> = ({length}) => {
     useEffect(() => {
         setRefMap(createRefMap(length))
     }, [length])
-
-    // @ts-ignore
-    window._refMap = refMap
-
 
     // const handleBlink = (index: number) => () => {
     //     setSelectedInElement(index, true)
@@ -54,10 +51,17 @@ const InitialArray: FC<Props> = ({length}) => {
     //     })
     // }
 
+    const handleSetTarget = (index: number) => () => {
+        const target = refMap[index].current
+        if (target) {
+            setTarget(target)
+        }
+    }
+
     return (
         <div className={classes.root}>
             {refMap.map((item, index) => {
-                return <div className={classes.spot} ref={item}/>
+                return <div className={classes.spot} ref={item} onClick={handleSetTarget(index)}/>
             })}
         </div>
     )
