@@ -1,6 +1,5 @@
 import {Theme, makeStyles} from "@material-ui/core";
 import React, {createRef, Dispatch, FC, RefObject, SetStateAction, useEffect, useState} from 'react'
-import MyElement from "./Element";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -25,7 +24,7 @@ const createRefMap = (length: number) => {
     return Array.from({length}).map(_ => createRef<HTMLDivElement>())
 }
 
-const InitialArray: FC<Props> = ({length, setTarget}) => {
+const ArraySpots: FC<Props> = ({length, setTarget}) => {
 
     const classes = useStyles()
 
@@ -67,4 +66,4 @@ const InitialArray: FC<Props> = ({length, setTarget}) => {
     )
 }
 
-export default InitialArray
+export default ArraySpots

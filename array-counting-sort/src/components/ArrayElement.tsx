@@ -41,7 +41,7 @@ interface Props {
     position: Position
 }
 
-const Element: FC<Props> = ({value, selected, onClick, position}) => {
+const ArrayElement: FC<Props> = ({value, selected, onClick, position}) => {
     const classes = useStyles()
 
     return (
@@ -62,4 +62,4 @@ const Element: FC<Props> = ({value, selected, onClick, position}) => {
     )
 }
 
-export default Element
+export default ArrayElement
