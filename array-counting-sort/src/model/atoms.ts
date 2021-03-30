@@ -24,6 +24,7 @@ export const rootAtom = declareAtom(
     initialState,
     on => [
         on(moveElementAction, (state, {index, newRef}) => {
+            debugger
             const newElementsMap = [...state.elementsMap]
             newElementsMap[index] = newRef
             return {

@@ -1,5 +1,5 @@
 import {ButtonBase, makeStyles, Paper, Theme, Typography} from "@material-ui/core";
-import React, {FC} from 'react'
+import React, {FC, memo} from 'react'
 import {green} from "@material-ui/core/colors";
 import cn from 'classnames'
 import {animated, config, Spring} from "react-spring";
@@ -41,8 +41,9 @@ interface Props {
     position: Position
 }
 
-const ArrayElement: FC<Props> = ({value, selected, onClick, position}) => {
+const ArrayElement: FC<Props> = memo(({value, selected, onClick, position}) => {
     const classes = useStyles()
+    console.log({value, selected, onClick, position})
 
     return (
         <Spring
@@ -52,7 +53,7 @@ const ArrayElement: FC<Props> = ({value, selected, onClick, position}) => {
             {props => <animated.div style={props}>
                 <Paper elevation={3}
                        className={cn(classes.paper, {[classes.selected]: selected})}>
-                    <ButtonBase onClick={() => console.log(DOMRect)}
+                    <ButtonBase onClick={() => {}}
                                 className={classes.buttonBase}>
                         <Typography variant={'h4'}>{value}</Typography>
                     </ButtonBase>
@@ -60,6 +61,6 @@ const ArrayElement: FC<Props> = ({value, selected, onClick, position}) => {
             </animated.div>}
         </Spring>
     )
-}
+})
 
 export default ArrayElement

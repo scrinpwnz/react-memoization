@@ -27,7 +27,7 @@ const ArraySpots: FC<Props> = ({state}) => {
     return (
         <div className={classes.root}>
             {state.map.map((item, index) => (
-                <div className={classes.spot} ref={item}/>
+                <div key={index} className={classes.spot} ref={item}/>
             ))}
         </div>
     )
