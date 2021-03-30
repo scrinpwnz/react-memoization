@@ -1,10 +1,14 @@
 import React, {createRef, useEffect, useMemo, useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
 import ArraySpots from "./components/ArraySpots";
-import {makeStyles, Theme} from "@material-ui/core";
+import {Button, makeStyles, Theme} from "@material-ui/core";
 import {green} from "@material-ui/core/colors";
 import MyElement from "./components/ArrayElement";
 import ArrayElement from "./components/ArrayElement";
+import {context, useAction, useAtom} from '@reatom/react'
+import {store} from "./store";
+import {moveElementAction, rootAtom} from "./model";
+import ArrayElementPortal from "./components/ArrayElementPortal";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -20,32 +24,20 @@ const useStyles = makeStyles((theme: Theme) => ({
 const App = () => {
     const classes = useStyles()
 
+    const atom = useAtom(rootAtom)
+    const moveElement = useAction(moveElementAction)
 
+    useEffect(() => {
 
-    //
-    // const [DOMRect, setDOMRect] = useState<DOMRect>()
-    // const [target, setTarget] = useState<Element>()
-    //
-    // useEffect(() => {
-    //     setDOMRect(target?.getBoundingClientRect())
-    // }, [target])
-    //
-    // return (
-    //     <div className={classes.root}>
-    //         <InitialArray length={10} setTarget={setTarget}/>
-    //         <InitialArray length={6} setTarget={setTarget}/>
-    //         {target && ReactDOM.createPortal(
-    //             <MyElement value={42} position={{
-    //                 top: (DOMRect?.top ?? 0) - target.getBoundingClientRect().top,
-    //                 left: (DOMRect?.left ?? 0) - target.getBoundingClientRect().left
-    //             }}/>,
-    //             target
-    //         )}
-    //     </div>
-    // );
+    }, [])
 
     return (
         <div className={classes.root}>
+            <ArraySpots state={atom.initialArray}/>
+            <ArraySpots state={atom.countingArray}/>
+            {atom.elementsMap.map((item, index) => (
+                <ArrayElementPortal value={atom.initialArray.data[index]} currentRef={item}/>
+                ))}
         </div>
     )
 }

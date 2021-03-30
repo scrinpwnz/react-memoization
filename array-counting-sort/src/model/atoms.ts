@@ -1,14 +1,15 @@
 import {declareAtom} from "@reatom/core";
 import {moveElementAction} from "./actions";
 import {createRefMap} from "./utils";
+import {State} from "./types";
 
-const initialArray = [3, 2, 5, 7, 8, 2]
+const initialArrayMap = createRefMap(6)
 
 const initialState: State = {
-    elementsMap: createRefMap(6),
+    elementsMap: [...initialArrayMap],
     initialArray: {
         data: [3, 2, 5, 7, 8, 2],
-        map: createRefMap(6),
+        map: initialArrayMap,
         currentIndex: 0
     },
     countingArray: {
@@ -18,10 +19,16 @@ const initialState: State = {
     }
 }
 
-const atom = declareAtom(
-    'atom',
+export const rootAtom = declareAtom(
+    'rootAtom',
+    initialState,
     on => [
-        on(moveElementAction, state => {
-            return state
+        on(moveElementAction, (state, {index, newRef}) => {
+            const newElementsMap = [...state.elementsMap]
+            newElementsMap[index] = newRef
+            return {
+                ...state,
+                elementsMap: newElementsMap
+            }
         })
     ])

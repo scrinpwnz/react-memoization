@@ -1,10 +1,12 @@
 import {RefObject} from "react";
 
 export interface State {
-    initialArray:
+    elementsMap: RefObject<HTMLDivElement>[]
+    initialArray: ArrayState
+    countingArray: ArrayState
 }
 
-interface ArrayState {
+export interface ArrayState {
     data: number[]
     map: RefObject<HTMLDivElement>[]
     currentIndex: number

@@ -1,5 +1,6 @@
-import {Theme, makeStyles} from "@material-ui/core";
-import React, {createRef, Dispatch, FC, RefObject, SetStateAction, useEffect, useState} from 'react'
+import {makeStyles, Theme} from "@material-ui/core";
+import React, {FC} from 'react'
+import {ArrayState} from "../model";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -16,52 +17,18 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 interface Props {
-    length: number
-    setTarget: Dispatch<SetStateAction<Element | undefined>>
+    state: ArrayState
 }
 
-const createRefMap = (length: number) => {
-    return Array.from({length}).map(_ => createRef<HTMLDivElement>())
-}
-
-const ArraySpots: FC<Props> = ({length, setTarget}) => {
+const ArraySpots: FC<Props> = ({state}) => {
 
     const classes = useStyles()
 
-    // const [selected, setSelected] = useState<boolean[]>([])
-    const [refMap, setRefMap] = useState<Array<RefObject<HTMLDivElement>>>(createRefMap(length))
-
-    useEffect(() => {
-        setRefMap(createRefMap(length))
-    }, [length])
-
-    // const handleBlink = (index: number) => () => {
-    //     setSelectedInElement(index, true)
-    //     setTimeout(() => {
-    //         setSelectedInElement(index, false)
-    //     }, 300)
-    // }
-    //
-    // const setSelectedInElement = (index: number, payload: boolean) => {
-    //     setSelected((state) => {
-    //         const newState = [...state]
-    //         newState[index] = payload
-    //         return newState
-    //     })
-    // }
-
-    const handleSetTarget = (index: number) => () => {
-        const target = refMap[index].current
-        if (target) {
-            setTarget(target)
-        }
-    }
-
     return (
         <div className={classes.root}>
-            {refMap.map((item, index) => {
-                return <div className={classes.spot} ref={item} onClick={handleSetTarget(index)}/>
-            })}
+            {state.map.map((item, index) => (
+                <div className={classes.spot} ref={item}/>
+            ))}
         </div>
     )
 }
