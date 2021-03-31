@@ -1,23 +1,28 @@
 import {makeStyles, Theme} from "@material-ui/core";
 import React, {FC} from 'react'
-import {ArrayState} from "../model";
+import {IArrayState} from "../model";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         display: 'flex',
         height: 64,
-        background: 'wheat',
         gap: theme.spacing(.5)
     },
     spot: {
+        position: 'relative',
+        transition: theme.transitions.create(['height'], {
+            duration: 300,
+            easing: 'ease'
+        }),
         width: 64,
         height: 64,
+        padding: 4,
         background: 'crimson'
     }
 }))
 
 interface Props {
-    state: ArrayState
+    state: IArrayState
 }
 
 const ArraySpots: FC<Props> = ({state}) => {
@@ -27,7 +32,7 @@ const ArraySpots: FC<Props> = ({state}) => {
     return (
         <div className={classes.root}>
             {state.map.map((item, index) => (
-                <div key={index} className={classes.spot} ref={item}/>
+                <div key={index} style={{height: (state.data[index]) * 64}} className={classes.spot} ref={item}/>
             ))}
         </div>
     )
