@@ -1,13 +1,11 @@
-import React, {FC} from 'react'
-import {animated, config, Spring} from "react-spring";
+import React, {FC, useEffect} from 'react'
 import {makeStyles, Theme} from "@material-ui/core";
-import {useAtom} from "@reatom/react";
-import {rootAtom} from "../model";
+import {useAction, useAtom} from "@reatom/react";
+import {rerenderElementAction, rootAtom} from "../model";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         width: 64,
-        background: 'yellow'
     }
 }))
 
@@ -18,16 +16,17 @@ interface Props {
 const ArrayContainer: FC<Props> = ({index}) => {
 
     const container = useAtom(rootAtom, state => state.containers[index], [index])
+    const rerenderElement = useAction(rerenderElementAction)
 
     const classes = useStyles()
 
+    useEffect(() => {
+        console.log(`'Контейнер ${index} родился!`)
+        rerenderElement(index)
+    }, [])
+
     return (
-        <Spring
-            config={config.default}
-            from={{height: 0}}
-            to={{height: 64}}>
-            {props => <animated.div ref={container.ref} className={classes.root} style={props}/>}
-        </Spring>
+        <div ref={container.ref} className={classes.root}/>
     )
 }
 

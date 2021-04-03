@@ -3,26 +3,25 @@ import {RefObject} from "react";
 export interface IState {
     elements: IElement[]
     containers: IContainer[]
-    initialArray: IArrayState
-    countingArray: IArrayState
-}
-
-export interface IArrayState {
-    data: number[]
-    map: RefObject<HTMLDivElement>[]
-    currentIndex?: number
+    initialArray: IArray
+    countingArray: IArray
 }
 
 export interface IElement {
     value: number
-    previousPosition?: IPosition
+    position?: IPosition
     ref: RefObject<HTMLDivElement>
-    container: RefObject<HTMLDivElement>
+    containerRef: RefObject<HTMLDivElement>
 }
 
 export interface IContainer {
     ref: RefObject<HTMLDivElement>
     container: RefObject<HTMLDivElement>
+}
+
+export interface IArray {
+    value: number[]
+    ref: RefObject<HTMLDivElement>
 }
 
 export interface IPosition {

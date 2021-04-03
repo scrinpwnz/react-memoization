@@ -1,7 +1,12 @@
 import {createStore} from "@reatom/core";
 import {rootAtom} from "../model";
-import { connectReduxDevtools } from '@reatom/debug'
-
 
 export const store = createStore(rootAtom)
-connectReduxDevtools(store)
+
+declare global {
+    interface Window {
+        store: typeof store
+    }
+}
+
+window.store = store

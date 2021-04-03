@@ -1,5 +1,5 @@
-import React, {RefObject, useEffect, useState} from 'react';
-import ArraySpots from "./components/ArraySpots";
+import React, {RefObject, useEffect, useMemo, useState} from 'react';
+import InitialArray from "./components/InitialArray";
 import {Button, makeStyles, Theme} from "@material-ui/core";
 import {green} from "@material-ui/core/colors";
 import {useAction, useAtom} from '@reatom/react'
@@ -14,13 +14,19 @@ import ArrayElementPortal from "./components/ArrayElementPortal";
 import _ from 'lodash'
 import {useForceUpdate} from "./hooks";
 import ArrayContainerPortal from "./components/ArrayContainerPortal";
+import CountingArray from "./components/CountingArray";
+import cn from 'classnames'
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         display: 'grid',
         height: '100vh',
         placeItems: 'center',
+        gridTemplateRows: 'repeat(3, 150px)',
         background: green[200]
+    },
+    hidden: {
+        opacity: 0
     }
 }))
 
@@ -58,29 +64,63 @@ function* steps(
     yield
     moveContainer({
         index: 3,
-        container: containers[3]
+        container: containers[0]
     })
     updateCountInCountingArray({
-        index: 3,
-        payload: 1
+        index: 0,
+        payload: 4
     })
     yield
     moveContainer({
         index: 4,
-        container: containers[3]
+        container: containers[0]
     })
     updateCountInCountingArray({
-        index: 3,
-        payload: 2
+        index: 0,
+        payload: 5
     })
     yield
     moveContainer({
         index: 5,
-        container: containers[5]
+        container: containers[0]
     })
     updateCountInCountingArray({
+        index: 0,
+        payload: 6
+    })
+    yield
+    moveContainer({
         index: 5,
+        container: containers[0]
+    })
+    updateCountInCountingArray({
+        index: 0,
+        payload: 6
+    })
+    moveContainer({
+        index: 5,
+        container: containers[9]
+    })
+    updateCountInCountingArray({
+        index: 0,
+        payload: 5
+    })
+    updateCountInCountingArray({
+        index: 9,
         payload: 1
+    })
+    yield
+    moveContainer({
+        index: 0,
+        container: containers[9]
+    })
+    updateCountInCountingArray({
+        index: 9,
+        payload: 2
+    })
+    updateCountInCountingArray({
+        index: 0,
+        payload: 4
     })
 }
 
@@ -89,38 +129,31 @@ const App = () => {
     const classes = useStyles()
     const forceUpdate = useForceUpdate()
     const [updateCount, setUpdateCount] = useState(0)
+    const [ready, setReady] = useState(false)
+
+    console.count('App')
 
     const atom = useAtom(rootAtom)
     const moveElement = useAction(moveElementAction)
     const moveContainer = useAction(moveContainerAction)
     const updateCountInCountingArray = useAction(updateCountInCountingArrayAction)
 
-    const [generator, setGenerator] = useState<Generator<undefined, void>>(steps(moveContainer, updateCountInCountingArray, atom.countingArray.map))
-
-    const random = () => {
-        const countingIndex = _.random(0, atom.countingArray.map.length - 1)
-        const initialIndex = _.random(0, atom.initialArray.map.length - 1)
-        const container = atom.countingArray.map[countingIndex]
-        moveContainer({
-            index: initialIndex,
-            container
-        })
-    }
-
-
+    const generator = useMemo(() => steps(moveContainer, updateCountInCountingArray, atom.countingArray.map), [])
 
     useEffect(() => {
         if (updateCount < 2) {
             forceUpdate()
             setUpdateCount(updateCount + 1)
+        } else {
+            setReady(true)
         }
     }, [updateCount])
 
     return (
-        <div className={classes.root}>
+        <div className={cn(classes.root, {[classes.hidden]: !ready})}>
             <Button onClick={() => generator.next()}>Move</Button>
-            <ArraySpots state={atom.initialArray}/>
-            <ArraySpots state={atom.countingArray}/>
+            <InitialArray state={atom.initialArray}/>
+            <CountingArray state={atom.countingArray}/>
             {atom.containers.map((item, index) => (
                 <ArrayContainerPortal key={index}
                                       index={index}

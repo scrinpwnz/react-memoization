@@ -1,8 +1,7 @@
-import {declareAtom} from "@reatom/core";
+import {combine, declareAtom, map} from "@reatom/core";
 import {
     moveContainerAction,
-    moveElementAction,
-    setElementPreviousPositionAction,
+    moveElementAction, rerenderElementAction, setElementPositionAction,
     updateCountInCountingArrayAction
 } from "./actions";
 import {createRefMap} from "./utils";
@@ -10,29 +9,34 @@ import {IState} from "./types";
 import {createRef} from "react";
 
 const initialArray = [3, 2, 5, 7, 8, 2]
-const initialArrayMap = createRefMap(6)
+const countingArray = Array.from({length: 10}).map(_ => 0)
+
+const refs = {
+    elements: createRefMap(6),
+    elementsContainers: createRefMap(6),
+    initialArray: createRefMap(6),
+    countingArray: createRefMap(10)
+}
 
 const initialState: IState = {
     elements: initialArray.map((item, index) => ({
         value: item,
-        previousPosition: undefined,
-        ref: createRef<HTMLDivElement>(),
-        container: initialArrayMap[index]
+        position: undefined,
+        ref: refs.elements[index],
+        containerRef: refs.elementsContainers[index]
     })),
     containers: initialArray.map((item, index) => ({
-        ref: createRef<HTMLDivElement>(),
-        container: initialArrayMap[index]
+        ref: refs.elementsContainers[index],
+        containerRef: refs.initialArray[index]
     })),
-    initialArray: {
-        data: initialArray,
-        map: initialArrayMap,
-        currentIndex: undefined
-    },
-    countingArray: {
-        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        map: createRefMap(10),
-        currentIndex: undefined
-    }
+    initialArray: initialArray.map((item, index) => ({
+        value: item,
+        ref: refs.initialArray[index]
+    }),
+    countingArray: countingArray.map((item, index) => ({
+        value: item,
+        ref: refs.countingArray[index]
+    })
 }
 
 export const rootAtom = declareAtom(
@@ -53,8 +57,8 @@ export const rootAtom = declareAtom(
             }
             return {...state}
         }),
-        on(setElementPreviousPositionAction, (state, {index, previousPosition}) => {
-            state.elements[index].previousPosition = previousPosition
+        on(setElementPositionAction, (state, {index, position}) => {
+            state.elements[index].position = position
             return state
         }),
         on(updateCountInCountingArrayAction, (state, {index, payload}) => {
@@ -67,5 +71,8 @@ export const rootAtom = declareAtom(
                     data: newData
                 }
             }
+        }),
+        on(rerenderElementAction, (state, index) => {
+            return { ...state }
         })
     ])

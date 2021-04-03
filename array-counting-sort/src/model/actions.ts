@@ -16,17 +16,12 @@ export interface MoveContainerPayload {
 
 export const moveContainerAction = declareAction<MoveContainerPayload>('MOVE_CONTAINER')
 
-export interface SetElementPreviousPositionPayload {
+export interface SetElementPositionPayload {
     index: number
-    previousPosition: IPosition
+    position: IPosition
 }
 
-export const setElementPreviousPositionAction = declareAction<SetElementPreviousPositionPayload>("SET_ELEMENT_PREVIOUS_POSITION")
-
-export interface SetElementPreviousPositionPayload {
-    index: number
-    previousPosition: IPosition
-}
+export const setElementPositionAction = declareAction<SetElementPositionPayload>("SET_ELEMENT_POSITION")
 
 export interface UpdateCountInCountingArrayPayload {
     index: number
@@ -34,3 +29,5 @@ export interface UpdateCountInCountingArrayPayload {
 }
 
 export const updateCountInCountingArrayAction = declareAction<UpdateCountInCountingArrayPayload>("UPDATE_COUNT_IN_COUNTING_ARRAY")
+
+export const rerenderElementAction = declareAction<number>("RERENDER_ELEMENT")

@@ -4,7 +4,7 @@ import {green} from "@material-ui/core/colors";
 import cn from 'classnames'
 import {animated, config, Spring} from "react-spring";
 import {useAction, useAtom} from "@reatom/react";
-import {rootAtom, setElementPreviousPositionAction} from "../model";
+import {rootAtom, setElementPositionAction} from "../model";
 import {useForceUpdate} from "../hooks";
 import _ from 'lodash'
 
@@ -45,38 +45,33 @@ interface Props {
 const ArrayElement: FC<Props> = ({index}) => {
 
     const classes = useStyles()
-    const forceUpdate = useForceUpdate()
 
     const element = useAtom(rootAtom, state => state.elements[index], [index])
-    const setElementPreviousPosition = useAction(setElementPreviousPositionAction)
+    const setElementPosition = useAction(setElementPositionAction)
 
-    console.log('[ArrayElement]', _.cloneDeep({element, rect: element.ref.current?.getBoundingClientRect()}))
+    const rect = element.container.current?.getBoundingClientRect()
 
-    const position = element.ref.current?.getBoundingClientRect()
-    const {previousPosition} = element
+    const position = {
+        top: rect?.top ?? 0,
+        left: rect?.left ?? 0
+    }
 
     useEffect(() => {
-        const position = element.ref.current?.getBoundingClientRect()
-        setElementPreviousPosition({
+        console.log(`Элемент ${index} родился на позиции [${position.top}, ${position.left}]`)
+        setElementPosition({
             index,
-            previousPosition: {
-                top: position?.top ?? 0,
-                left: position?.left ?? 0
-            }
+            position
         })
-        forceUpdate()
     }, [])
 
-    let top = 0
-    let left = 0
-    if (previousPosition && position) {
-        top = previousPosition.top - position.top
-        left = previousPosition.left - position.left
+    const startPosition = {
+        left: element.position ? element.position?.left - position.left : 0,
+        top: element.position ? element.position?.top - position.top : 0,
     }
 
     return <Spring
             config={config.gentle}
-            from={{transform: `translate(${left}px, ${top}px)`}}
+            from={{transform: `translate(${startPosition.left}px, ${startPosition.top}px)`}}
             to={{transform: `translate(0px, 0px)`}}>
             {props => <animated.div style={props}>
                 <Paper elevation={3}
