@@ -32,11 +32,11 @@ const initialState: IState = {
     initialArray: initialArray.map((item, index) => ({
         value: item,
         ref: refs.initialArray[index]
-    }),
+    })),
     countingArray: countingArray.map((item, index) => ({
         value: item,
         ref: refs.countingArray[index]
-    })
+    }))
 }
 
 export const rootAtom = declareAtom(

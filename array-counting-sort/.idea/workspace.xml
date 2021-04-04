@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb13472b-f62a-43f3-900a-4f190ce927e1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/CountingArray.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ArrayContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ArrayContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ArrayElement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ArrayElement.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ArrayElementPortal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ArrayElementPortal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ArraySpots.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InitialArray.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/actions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/atoms.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/atoms.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +35,10 @@
     <property name="ts.external.directory.path" value="C:\Users\scrinpwnz\Documents\_IT\_work\learning\takeoff-staff-articles\array-counting-sort\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="cb13472b-f62a-43f3-900a-4f190ce927e1" name="Default Changelist" comment="" />
