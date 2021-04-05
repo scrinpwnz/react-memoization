@@ -1,24 +1,33 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import {makeStyles, Paper, Theme, Typography} from "@material-ui/core";
 import React, {FC} from 'react'
-import {IArray} from "../model";
+import {IInitialArray} from "../model";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         display: 'flex',
-        height: 64,
-        gap: theme.spacing(.5)
+        gap: theme.spacing(.5),
+        padding: theme.spacing(1),
+        borderRadius: theme.spacing(3)
     },
     spot: {
         position: 'relative',
         width: 64,
+        height: 64
+    },
+    placeholder: {
+        position: 'absolute',
+        width: 64,
         height: 64,
-        padding: 4,
-        background: 'crimson'
+        top: 0,
+        left: 0,
+        display: 'grid',
+        placeItems: 'center',
+        zIndex: 0
     }
 }))
 
 interface Props {
-    state: IArray
+    state: IInitialArray[]
 }
 
 const InitialArray: FC<Props> = ({state}) => {
@@ -26,11 +35,15 @@ const InitialArray: FC<Props> = ({state}) => {
     const classes = useStyles()
 
     return (
-        <div className={classes.root}>
-            {state.map.map((item, index) => (
-                <div key={index} className={classes.spot} ref={item}/>
+        <Paper elevation={6} className={classes.root}>
+            {state.map((item, index) => (
+                <div key={index} className={classes.spot} ref={item.ref}>
+                    <div className={classes.placeholder}>
+                        <Typography variant={'h4'} color={'textSecondary'}>{item.value}</Typography>
+                    </div>
+                </div>
             ))}
-        </div>
+        </Paper>
     )
 }
 

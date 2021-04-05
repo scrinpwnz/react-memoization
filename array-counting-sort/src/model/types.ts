@@ -3,8 +3,8 @@ import {RefObject} from "react";
 export interface IState {
     elements: IElement[]
     containers: IContainer[]
-    initialArray: IArray[]
-    countingArray: IArray[]
+    initialArray: IInitialArray[]
+    countingArray: ICountingArray[]
 }
 
 export interface IElement {
@@ -19,8 +19,15 @@ export interface IContainer {
     containerRef: RefObject<HTMLDivElement>
 }
 
-export interface IArray {
+export interface IInitialArray {
     value: number
+    ref: RefObject<HTMLDivElement>
+}
+
+export interface ICountingArray {
+    value: number
+    selected: boolean
+    numberOfElements: number
     ref: RefObject<HTMLDivElement>
 }
 

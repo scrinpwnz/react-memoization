@@ -1,128 +1,34 @@
-import React, {RefObject, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import InitialArray from "./components/InitialArray";
 import {Button, makeStyles, Theme} from "@material-ui/core";
 import {green} from "@material-ui/core/colors";
 import {useAction, useAtom} from '@reatom/react'
 import {
+    blinkInCountingArrayReaction, countingArray, initialArray,
     moveContainerAction,
-    MoveContainerPayload,
-    moveElementAction,
     rootAtom,
-    updateCountInCountingArrayAction, UpdateCountInCountingArrayPayload
+    setNumberOfElementsInCountingArrayAction,
+    setValueInCountingArrayAction
 } from "./model";
 import ArrayElementPortal from "./components/ArrayElementPortal";
-import _ from 'lodash'
 import {useForceUpdate} from "./hooks";
 import ArrayContainerPortal from "./components/ArrayContainerPortal";
 import CountingArray from "./components/CountingArray";
 import cn from 'classnames'
+import {sleep} from "./helpers";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         display: 'grid',
         height: '100vh',
         placeItems: 'center',
-        gridTemplateRows: 'repeat(3, 150px)',
+        gridTemplateRows: 'repeat(3, minmax(150px, 250px))',
         background: green[200]
     },
     hidden: {
         opacity: 0
     }
 }))
-
-function* steps(
-    moveContainer: (payload: MoveContainerPayload) => void,
-    updateCountInCountingArray: (payload: UpdateCountInCountingArrayPayload) => void,
-    containers: RefObject<HTMLDivElement>[]
-) {
-    moveContainer({
-        index: 0,
-        container: containers[0]
-    })
-    updateCountInCountingArray({
-        index: 0,
-        payload: 1
-    })
-    yield
-    moveContainer({
-        index: 1,
-        container: containers[0]
-    })
-    updateCountInCountingArray({
-        index: 0,
-        payload: 2
-    })
-    yield
-    moveContainer({
-        index: 2,
-        container: containers[0]
-    })
-    updateCountInCountingArray({
-        index: 0,
-        payload: 3
-    })
-    yield
-    moveContainer({
-        index: 3,
-        container: containers[0]
-    })
-    updateCountInCountingArray({
-        index: 0,
-        payload: 4
-    })
-    yield
-    moveContainer({
-        index: 4,
-        container: containers[0]
-    })
-    updateCountInCountingArray({
-        index: 0,
-        payload: 5
-    })
-    yield
-    moveContainer({
-        index: 5,
-        container: containers[0]
-    })
-    updateCountInCountingArray({
-        index: 0,
-        payload: 6
-    })
-    yield
-    moveContainer({
-        index: 5,
-        container: containers[0]
-    })
-    updateCountInCountingArray({
-        index: 0,
-        payload: 6
-    })
-    moveContainer({
-        index: 5,
-        container: containers[9]
-    })
-    updateCountInCountingArray({
-        index: 0,
-        payload: 5
-    })
-    updateCountInCountingArray({
-        index: 9,
-        payload: 1
-    })
-    yield
-    moveContainer({
-        index: 0,
-        container: containers[9]
-    })
-    updateCountInCountingArray({
-        index: 9,
-        payload: 2
-    })
-    updateCountInCountingArray({
-        index: 0,
-        payload: 4
-    })
-}
 
 
 const App = () => {
@@ -134,11 +40,65 @@ const App = () => {
     console.count('App')
 
     const atom = useAtom(rootAtom)
-    const moveElement = useAction(moveElementAction)
     const moveContainer = useAction(moveContainerAction)
-    const updateCountInCountingArray = useAction(updateCountInCountingArrayAction)
+    const blinkInCountingArray = useAction(blinkInCountingArrayReaction)
+    const setValueInCountingArray = useAction(setValueInCountingArrayAction)
+    const setNumberOfElementsInCountingArray = useAction(setNumberOfElementsInCountingArrayAction)
 
-    const generator = useMemo(() => steps(moveContainer, updateCountInCountingArray, atom.countingArray.map), [])
+    const moveElement = (
+        index: number,
+        countingArrayIndex: number,
+        countingArrayValue: number,
+        countingArrayNumberOfElements: number
+    ) => {
+        moveContainer({
+            index,
+            containerRef: atom.countingArray[countingArrayIndex].ref
+        })
+        setValueInCountingArray({
+            index: countingArrayIndex,
+            payload: countingArrayValue
+        })
+        blinkInCountingArray({ index: countingArrayIndex })
+        setNumberOfElementsInCountingArray({
+            index: countingArrayIndex,
+            payload: countingArrayNumberOfElements
+        })
+    }
+
+    const sumNext = async (index: number, value: number, nextValue: number) => {
+        blinkInCountingArray({ index })
+        blinkInCountingArray({ index: index + 1 })
+        await sleep(600)
+        setValueInCountingArray({
+            index: index + 1,
+            payload: value + nextValue
+        })
+        blinkInCountingArray({ index: index + 1 })
+        await sleep(300)
+    }
+
+    const steps = useCallback(async function* steps() {
+        const initialArr = [ ...initialArray ]
+        const countingArr = [ ...countingArray]
+
+        let index = 0
+        for (const value of initialArr) {
+            moveElement(index++, value, ++countingArr[value], countingArr[value])
+            yield
+        }
+
+        index = 0
+        for (const value of countingArr) {
+            if (index === countingArr.length - 1) break
+            await sumNext(index, countingArr[index], countingArr[index + 1])
+            countingArr[index + 1] = countingArr[index] + countingArr[index + 1]
+            index++
+            yield
+        }
+    }, [])
+
+    const generator = useMemo(() => steps(), [])
 
     useEffect(() => {
         if (updateCount < 2) {
@@ -157,12 +117,12 @@ const App = () => {
             {atom.containers.map((item, index) => (
                 <ArrayContainerPortal key={index}
                                       index={index}
-                                      container={item.container.current}/>
+                                      container={item.containerRef.current}/>
             ))}
-            {atom.containers.map((item, index) => (
+            {atom.elements.map((item, index) => (
                 <ArrayElementPortal key={index}
                                     index={index}
-                                    container={item.ref.current}/>
+                                    container={item.containerRef.current}/>
             ))}
         </div>
     )

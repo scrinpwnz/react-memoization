@@ -2,6 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb13472b-f62a-43f3-900a-4f190ce927e1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/helpers/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/sleep.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ArrayContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ArrayContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ArrayElement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ArrayElement.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CountingArray.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CountingArray.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/InitialArray.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InitialArray.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/actions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/atoms.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/atoms.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/types.ts" afterDir="false" />
     </list>
@@ -14,6 +23,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -30,9 +40,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="ts.external.directory.path" value="C:\Users\scrinpwnz\Documents\_IT\_work\learning\takeoff-staff-articles\array-counting-sort\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Users\scrinpwnz\Documents\_IT\_work\takeoff-staff-articles\array-counting-sort\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
@@ -51,11 +65,14 @@
       <workItem from="1616919717395" duration="14000" />
       <workItem from="1617266989495" duration="13966000" />
       <workItem from="1617348927704" duration="9587000" />
+      <workItem from="1617597502032" duration="47000" />
+      <workItem from="1617597580632" duration="10807000" />
+      <workItem from="1617613988743" duration="8539000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
     <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1617295869747">
@@ -82,5 +99,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1617272923912" />
+    <state x="667" y="255" width="585" height="530" key="find.popup" timestamp="1617599926619">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="667" y="255" width="585" height="530" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1617599926619" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1617619852673">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1617619852673" />
   </component>
 </project>

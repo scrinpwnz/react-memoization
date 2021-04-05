@@ -5,7 +5,7 @@ import {rerenderElementAction, rootAtom} from "../model";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
-        width: 64,
+        width: 64
     }
 }))
 

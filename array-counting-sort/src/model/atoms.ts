@@ -1,20 +1,21 @@
-import {combine, declareAtom, map} from "@reatom/core";
+import {declareAtom} from "@reatom/core";
 import {
     moveContainerAction,
-    moveElementAction, rerenderElementAction, setElementPositionAction,
-    updateCountInCountingArrayAction
+    rerenderElementAction,
+    setElementPositionAction, setNumberOfElementsInCountingArrayAction, setSelectedInCountingArrayAction,
+    setValueInCountingArrayAction
 } from "./actions";
 import {createRefMap} from "./utils";
 import {IState} from "./types";
-import {createRef} from "react";
+import _ from "lodash";
 
-const initialArray = [3, 2, 5, 7, 8, 2]
-const countingArray = Array.from({length: 10}).map(_ => 0)
+export const initialArray = Array.from({length: 15}).map(item => _.random(0, 9))
+export const countingArray = Array.from({length: 10}).map(_ => 0)
 
 const refs = {
-    elements: createRefMap(6),
-    elementsContainers: createRefMap(6),
-    initialArray: createRefMap(6),
+    elements: createRefMap(initialArray.length),
+    containers: createRefMap(initialArray.length),
+    initialArray: createRefMap(initialArray.length),
     countingArray: createRefMap(10)
 }
 
@@ -23,10 +24,10 @@ const initialState: IState = {
         value: item,
         position: undefined,
         ref: refs.elements[index],
-        containerRef: refs.elementsContainers[index]
+        containerRef: refs.containers[index]
     })),
     containers: initialArray.map((item, index) => ({
-        ref: refs.elementsContainers[index],
+        ref: refs.containers[index],
         containerRef: refs.initialArray[index]
     })),
     initialArray: initialArray.map((item, index) => ({
@@ -35,6 +36,8 @@ const initialState: IState = {
     })),
     countingArray: countingArray.map((item, index) => ({
         value: item,
+        selected: false,
+        numberOfElements: 0,
         ref: refs.countingArray[index]
     }))
 }
@@ -43,17 +46,10 @@ export const rootAtom = declareAtom(
     'rootAtom',
     initialState,
     on => [
-        on(moveElementAction, (state, {index, container}) => {
-            state.elements[index] = {
-                ...state.elements[index],
-                container
-            }
-            return {...state}
-        }),
-        on(moveContainerAction, (state, {index, container}) => {
+        on(moveContainerAction, (state, {index, containerRef}) => {
             state.containers[index] = {
                 ...state.containers[index],
-                container
+                containerRef
             }
             return {...state}
         }),
@@ -61,18 +57,28 @@ export const rootAtom = declareAtom(
             state.elements[index].position = position
             return state
         }),
-        on(updateCountInCountingArrayAction, (state, {index, payload}) => {
-            const newData = state.countingArray.data
-            newData[index] = payload
-            return {
-                ...state,
-                countingArray: {
-                    ...state.countingArray,
-                    data: newData
-                }
+        on(setValueInCountingArrayAction, (state, {index, payload}) => {
+            state.countingArray[index] = {
+                ...state.countingArray[index],
+                value: payload
             }
+            return {...state}
+        }),
+        on(setNumberOfElementsInCountingArrayAction, (state, {index, payload}) => {
+            state.countingArray[index] = {
+                ...state.countingArray[index],
+                numberOfElements: payload
+            }
+            return {...state}
         }),
         on(rerenderElementAction, (state, index) => {
-            return { ...state }
+            return {...state}
+        }),
+        on(setSelectedInCountingArrayAction, (state, {index, payload}) => {
+            state.countingArray[index] = {
+                ...state.countingArray[index],
+                selected: payload
+            }
+            return {...state}
         })
     ])
