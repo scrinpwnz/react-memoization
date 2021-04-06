@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="cb13472b-f62a-43f3-900a-4f190ce927e1" name="Default Changelist" comment="test">
+    <list default="true" id="cb13472b-f62a-43f3-900a-4f190ce927e1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/PlayButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/createThrottler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ArrayContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ArrayContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ArrayElement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ArrayElement.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ArrayElementPlaceholder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ArrayElementPlaceholder.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CountingArray.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CountingArray.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/InitialArray.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InitialArray.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,13 +41,15 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+        <option value="MUIComponent" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RESET_MODE" value="SOFT" />
   </component>
   <component name="ProjectId" id="1qNTOQ8m9UFkN5aH9EkhAPV5QU8" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -62,7 +92,7 @@
       <workItem from="1617597502032" duration="47000" />
       <workItem from="1617597580632" duration="10807000" />
       <workItem from="1617613988743" duration="8641000" />
-      <workItem from="1617676013915" duration="3493000" />
+      <workItem from="1617676013915" duration="12519000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1617626358590</created>
@@ -78,24 +108,75 @@
       <option name="project" value="LOCAL" />
       <updated>1617679778869</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="test">
+      <created>1617680488630</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1617680488630</updated>
+    </task>
+    <task id="LOCAL-00004" summary="prettier">
+      <created>1617680540577</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1617680540577</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:C:/Users/scrinpwnz/Documents/_IT/_work/takeoff-staff-articles/array-counting-sort" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="1" value="TOOL_WINDOW" />
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="update" />
+    <MESSAGE value="test" />
     <MESSAGE value="prettier" />
     <option name="LAST_COMMIT_MESSAGE" value="prettier" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="513" y="88" key="CommitChangelistDialog2" timestamp="1617679801553">
+    <state x="513" y="88" key="CommitChangelistDialog2" timestamp="1617680527534">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="513" y="88" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1617679801553" />
+    <state x="513" y="88" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1617680527534" />
     <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1617295869747">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -112,10 +193,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1899" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1617295869746" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1617626361442">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1617680545824">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1617626361442" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1617680545824" />
     <state x="565" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1617293779875">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -128,9 +209,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="667" y="255" width="585" height="530" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1617599926619" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1617619852673">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1617682734031">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1617619852673" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1617682734031" />
   </component>
 </project>

@@ -1,10 +1,11 @@
 import { ButtonBase, makeStyles, Paper, Theme, Typography } from '@material-ui/core'
-import React, { FC, useEffect } from 'react'
+import React, { FC, memo, useCallback, useEffect, useMemo } from 'react'
 import { green } from '@material-ui/core/colors'
 import cn from 'classnames'
 import { animated, config, Spring } from 'react-spring'
 import { useAction, useAtom } from '@reatom/react'
 import { rootAtom, setElementPositionAction } from '../model'
+import { createThrottler } from '../helpers/createThrottler'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -14,14 +15,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     zIndex: 1
   },
   paper: {
-    height: 64,
-    width: 64,
+    height: '4rem',
+    width: '4rem',
     display: 'grid',
     placeItems: 'center',
     color: green[900],
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.spacing(2),
+    borderRadius: '1rem',
     transition: theme.transitions.create(['background-color', 'color'], {
       duration: 300,
       easing: 'ease'
@@ -37,29 +38,41 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
+const getPosition = (rect?: DOMRect) => ({
+  top: rect?.top ?? 0,
+  left: rect?.left ?? 0
+})
+
 interface Props {
   index: number
 }
 
-const ArrayElement: FC<Props> = ({ index }) => {
+const ArrayElement: FC<Props> = memo(({ index }) => {
   const classes = useStyles()
 
   const element = useAtom(rootAtom, state => state.elements[index], [index])
   const setElementPosition = useAction(setElementPositionAction)
 
-  const rect = element.containerRef.current?.getBoundingClientRect()
+  const position = getPosition(element.containerRef.current?.getBoundingClientRect())
 
-  const position = {
-    top: rect?.top ?? 0,
-    left: rect?.left ?? 0
-  }
-
-  useEffect(() => {
-    console.log(`Элемент ${index} родился на позиции [${position.top}, ${position.left}]`)
+  const setElementPositionListener = useCallback(() => {
+    const position = getPosition(element.containerRef.current?.getBoundingClientRect())
+    console.log(`Изменение позиции элемента ${index} [${position.top}, ${position.left}]`)
     setElementPosition({
       index,
       position
     })
+  }, [])
+
+  const setElementPositionListenerThrottler = useMemo(() => createThrottler(setElementPositionListener, 200), [])
+
+  useEffect(() => {
+    console.log(`Элемент ${index} родился на позиции [${position.top}, ${position.left}]`)
+    setElementPositionListenerThrottler()
+    window.addEventListener('resize', setElementPositionListenerThrottler)
+    return () => {
+      window.removeEventListener('resize', setElementPositionListenerThrottler)
+    }
   }, [])
 
   const startPosition = {
@@ -83,6 +96,6 @@ const ArrayElement: FC<Props> = ({ index }) => {
       )}
     </Spring>
   )
-}
+})
 
 export default ArrayElement

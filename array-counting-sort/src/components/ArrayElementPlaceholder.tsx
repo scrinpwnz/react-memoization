@@ -1,19 +1,19 @@
-import { makeStyles, Paper, Theme, Typography } from '@material-ui/core'
-import React, { FC, ReactText } from 'react'
-import { IInitialArray } from '../model'
+import { makeStyles, Theme, Typography } from '@material-ui/core'
+import React, { FC, memo, ReactText } from 'react'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     position: 'absolute',
-    width: 64,
-    height: 64,
+    userSelect: 'none',
+    width: '4rem',
+    height: '4rem',
     top: 0,
     left: 0,
     display: 'grid',
     placeItems: 'center',
     zIndex: 0,
     border: theme.palette.text.secondary,
-    borderRadius: theme.spacing(2),
+    borderRadius: '1rem',
     background: theme.palette.background.default,
     overflow: 'hidden',
     boxShadow: `
@@ -28,7 +28,7 @@ interface Props {
   value?: ReactText
 }
 
-const InitialArray: FC<Props> = ({ value }) => {
+const ArrayElementPlaceholder: FC<Props> = memo(({ value }) => {
   const classes = useStyles()
 
   return (
@@ -38,6 +38,6 @@ const InitialArray: FC<Props> = ({ value }) => {
       </Typography>
     </div>
   )
-}
+})
 
-export default InitialArray
+export default ArrayElementPlaceholder
