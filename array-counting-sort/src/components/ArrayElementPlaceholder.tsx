@@ -1,20 +1,9 @@
 import { makeStyles, Paper, Theme, Typography } from '@material-ui/core'
-import React, { FC } from 'react'
+import React, { FC, ReactText } from 'react'
 import { IInitialArray } from '../model'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    display: 'flex',
-    gap: theme.spacing(0.5),
-    padding: theme.spacing(1),
-    borderRadius: theme.spacing(3)
-  },
-  spot: {
-    position: 'relative',
-    width: 64,
-    height: 64
-  },
-  placeholder: {
     position: 'absolute',
     width: 64,
     height: 64,
@@ -36,24 +25,18 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 interface Props {
-  state: IInitialArray[]
+  value?: ReactText
 }
 
-const InitialArray: FC<Props> = ({ state }) => {
+const InitialArray: FC<Props> = ({ value }) => {
   const classes = useStyles()
 
   return (
-    <Paper elevation={6} className={classes.root}>
-      {state.map((item, index) => (
-        <div key={index} className={classes.spot} ref={item.ref}>
-          <div className={classes.placeholder}>
-            <Typography variant={'h4'} color={'textSecondary'}>
-              {item.value}
-            </Typography>
-          </div>
-        </div>
-      ))}
-    </Paper>
+    <div className={classes.root}>
+      <Typography variant={'h4'} color={'textSecondary'}>
+        {value}
+      </Typography>
+    </div>
   )
 }
 

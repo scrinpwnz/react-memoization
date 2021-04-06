@@ -1,19 +1,18 @@
-import React, {FC, memo} from 'react'
-import {createPortal} from "react-dom";
-import ArrayContainer from "./ArrayContainer";
+import React, { FC, memo } from 'react'
+import { createPortal } from 'react-dom'
+import ArrayContainer from './ArrayContainer'
 
 interface Props {
-    index: number
-    container: Element | null
+  index: number
+  container: Element | null
 }
 
-const ArrayContainerPortal: FC<Props> = memo(({index, container}) => {
+const ArrayContainerPortal: FC<Props> = memo(({ index, container }) => {
+  console.log('[ArrayContainerPortal]', { container })
 
-    console.log('[ArrayContainerPortal]', {container})
+  if (!container) return null
 
-    if (!container) return null
-
-    return createPortal(<ArrayContainer index={index}/>, container)
+  return createPortal(<ArrayContainer index={index} />, container)
 })
 
 export default ArrayContainerPortal

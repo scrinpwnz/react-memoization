@@ -1,37 +1,37 @@
-import {RefObject} from "react";
+import { RefObject } from 'react'
 
 export interface IState {
-    elements: IElement[]
-    containers: IContainer[]
-    initialArray: IInitialArray[]
-    countingArray: ICountingArray[]
+  elements: IElement[]
+  containers: IContainer[]
+  initialArray: IInitialArray[]
+  countingArray: ICountingArray[]
 }
 
 export interface IElement {
-    value: number
-    position?: IPosition
-    ref: RefObject<HTMLDivElement>
-    containerRef: RefObject<HTMLDivElement>
+  value: number
+  position?: IPosition
+  ref: RefObject<HTMLDivElement>
+  containerRef: RefObject<HTMLDivElement>
 }
 
 export interface IContainer {
-    ref: RefObject<HTMLDivElement>
-    containerRef: RefObject<HTMLDivElement>
+  ref: RefObject<HTMLDivElement>
+  containerRef: RefObject<HTMLDivElement>
 }
 
 export interface IInitialArray {
-    value: number
-    ref: RefObject<HTMLDivElement>
+  value: number
+  ref: RefObject<HTMLDivElement>
 }
 
 export interface ICountingArray {
-    value: number
-    selected: boolean
-    numberOfElements: number
-    ref: RefObject<HTMLDivElement>
+  value: number
+  selected: boolean
+  numberOfElements: number
+  ref: RefObject<HTMLDivElement>
 }
 
 export interface IPosition {
-    top: number
-    left: number
+  top: number
+  left: number
 }
