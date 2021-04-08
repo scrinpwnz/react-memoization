@@ -1,14 +1,16 @@
-import { makeStyles, Paper, Theme } from '@material-ui/core'
+import { makeStyles, Paper, Theme, Typography } from '@material-ui/core'
 import React, { FC, memo } from 'react'
 import { IArrayItem } from '../model'
 import ArrayElementPlaceholder from './ArrayElementPlaceholder'
+import IndexItem from './IndexItem'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     gap: '.25rem',
     padding: '.5rem',
-    borderRadius: '1.5rem'
+    borderRadius: '1.5rem',
+    userSelect: 'none'
   },
   spot: {
     position: 'relative',
@@ -21,18 +23,21 @@ interface Props {
   state: IArrayItem[]
 }
 
-const InitialArray: FC<Props> = memo(({ state }) => {
+const ResultArray: FC<Props> = memo(({ state }) => {
   const classes = useStyles()
 
   return (
     <Paper elevation={6} className={classes.root}>
       {state.map((item, index) => (
-        <div key={index} className={classes.spot} ref={item.ref}>
-          <ArrayElementPlaceholder value={item.value} selected={item.selected} />
+        <div>
+          <div key={index} className={classes.spot} ref={item.ref}>
+            <ArrayElementPlaceholder selected={item.selected} />
+          </div>
+          <IndexItem index={index + 1} selected={item.indexSelected} />
         </div>
       ))}
     </Paper>
   )
 })
 
-export default InitialArray
+export default ResultArray

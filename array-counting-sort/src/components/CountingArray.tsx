@@ -1,10 +1,11 @@
 import { makeStyles, Paper, Theme, Typography } from '@material-ui/core'
-import React, { FC, memo, useCallback, useEffect, useMemo, useState } from 'react'
-import { ICountingArray } from '../model'
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
+import { ICountingArrayItem } from '../model'
 import { animated, config, Spring } from 'react-spring'
-import { green, purple } from '@material-ui/core/colors'
+import { purple } from '@material-ui/core/colors'
 import cn from 'classnames'
 import { createThrottler } from '../helpers/createThrottler'
+import IndexItem from './IndexItem'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const getWindowModifier = () => window.innerWidth * 0.0083333333
 
 interface Props {
-  state: ICountingArray[]
+  state: ICountingArrayItem[]
 }
 
 const CountingArray: FC<Props> = ({ state }) => {
@@ -77,6 +78,7 @@ const CountingArray: FC<Props> = ({ state }) => {
   return (
     <Paper className={classes.root} elevation={6}>
       {state.map((item, index) => {
+        console.log('tsts')
         return (
           <div>
             <Paper className={cn(classes.item, { [classes.selected]: item.selected })} variant={'outlined'}>
@@ -84,9 +86,7 @@ const CountingArray: FC<Props> = ({ state }) => {
                 {item.value}
               </Typography>
             </Paper>
-            <Typography variant={'h6'} color={'textSecondary'} align={'center'}>
-              {index}
-            </Typography>
+            <IndexItem index={index} selected={item.indexSelected} />
             <Spring
               config={config.wobbly}
               onResolve={() => (prevData[index] = item.numberOfElements)}

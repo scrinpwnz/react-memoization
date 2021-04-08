@@ -3,8 +3,9 @@ import { RefObject } from 'react'
 export interface IState {
   elements: IElement[]
   containers: IContainer[]
-  initialArray: IInitialArray[]
-  countingArray: ICountingArray[]
+  initialArray: IArrayItem[]
+  countingArray: ICountingArrayItem[]
+  resultArray: IArrayItem[]
 }
 
 export interface IElement {
@@ -19,16 +20,15 @@ export interface IContainer {
   containerRef: RefObject<HTMLDivElement>
 }
 
-export interface IInitialArray {
+export interface IArrayItem {
   value: number
+  selected: boolean
+  indexSelected: boolean
   ref: RefObject<HTMLDivElement>
 }
 
-export interface ICountingArray {
-  value: number
-  selected: boolean
+export interface ICountingArrayItem extends IArrayItem {
   numberOfElements: number
-  ref: RefObject<HTMLDivElement>
 }
 
 export interface IPosition {

@@ -1,6 +1,6 @@
 import { declareAction } from '@reatom/core'
 import { RefObject } from 'react'
-import { IPosition } from './types'
+import { IPosition, IState } from './types'
 import { sleep } from '../helpers'
 
 export interface MoveContainerPayload {
@@ -24,22 +24,37 @@ export interface setValueInCountingArrayPayload {
 
 export const setValueInCountingArrayAction = declareAction<setValueInCountingArrayPayload>()
 
-export interface setNumberOfElementsInCountingArrayPayload {
+export const setNumberOfElementsInCountingArrayAction = declareAction<{
   index: number
   payload: number
-}
-
-export const setNumberOfElementsInCountingArrayAction = declareAction<setNumberOfElementsInCountingArrayPayload>()
+}>()
 
 export const rerenderElementAction = declareAction<number>()
 
-export const setSelectedInCountingArrayAction = declareAction<{ index: number; payload: boolean }>()
+interface IArrayPayload {
+  array: keyof Omit<IState, 'elements' | 'containers'>
+  index: number
+}
 
-export const blinkInCountingArrayReaction = declareAction<{ index: number; timeout?: number }>(
-  'blinkInCountingArray',
-  async ({ index, timeout = 300 }, { dispatch }) => {
-    dispatch(setSelectedInCountingArrayAction({ index, payload: true }))
+type TArrayType = 'selected' | 'indexSelected'
+
+interface ISetSelectedPayload extends IArrayPayload {
+  type: TArrayType
+  payload: boolean
+}
+
+interface IBlinkPayload extends IArrayPayload {
+  type: TArrayType
+  timeout?: number
+}
+
+export const setSelectedAction = declareAction<ISetSelectedPayload>()
+
+export const blinkReaction = declareAction<IBlinkPayload>(
+  'blinkReaction',
+  async ({ index, timeout = 300, type }, { dispatch }) => {
+    dispatch(setSelectedAction({ index, payload: true, array: 'countingArray', type: 'indexSelected' }))
     await sleep(timeout)
-    dispatch(setSelectedInCountingArrayAction({ index, payload: false }))
+    dispatch(setSelectedAction({ index, payload: false, array: 'countingArray', type: 'indexSelected' }))
   }
 )

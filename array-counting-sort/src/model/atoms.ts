@@ -4,21 +4,22 @@ import {
   rerenderElementAction,
   setElementPositionAction,
   setNumberOfElementsInCountingArrayAction,
-  setSelectedInCountingArrayAction,
+  setSelectedAction,
   setValueInCountingArrayAction
 } from './actions'
 import { createRefMap } from './utils'
 import { IState } from './types'
-import _ from 'lodash'
+import { random } from 'lodash'
 
-export const initialArray = Array.from({ length: 15 }).map(item => _.random(0, 9))
+export const initialArray = Array.from({ length: 15 }).map(_ => random(0, 9))
 export const countingArray = Array.from({ length: 10 }).map(_ => 0)
 
 const refs = {
   elements: createRefMap(initialArray.length),
   containers: createRefMap(initialArray.length),
   initialArray: createRefMap(initialArray.length),
-  countingArray: createRefMap(10)
+  countingArray: createRefMap(10),
+  resultArray: createRefMap(initialArray.length)
 }
 
 const initialState: IState = {
@@ -34,13 +35,22 @@ const initialState: IState = {
   })),
   initialArray: initialArray.map((item, index) => ({
     value: item,
+    selected: false,
+    indexSelected: false,
     ref: refs.initialArray[index]
   })),
   countingArray: countingArray.map((item, index) => ({
     value: item,
     selected: false,
+    indexSelected: false,
     numberOfElements: 0,
     ref: refs.countingArray[index]
+  })),
+  resultArray: initialArray.map((item, index) => ({
+    value: index + 1,
+    selected: false,
+    indexSelected: false,
+    ref: refs.resultArray[index]
   }))
 }
 
@@ -73,10 +83,10 @@ export const rootAtom = declareAtom('rootAtom', initialState, on => [
   on(rerenderElementAction, (state, index) => {
     return { ...state }
   }),
-  on(setSelectedInCountingArrayAction, (state, { index, payload }) => {
-    state.countingArray[index] = {
-      ...state.countingArray[index],
-      selected: payload
+  on(setSelectedAction, (state, { index, payload, array, type }) => {
+    state[array][index] = {
+      ...state[array][index],
+      [type]: payload
     }
     return { ...state }
   })

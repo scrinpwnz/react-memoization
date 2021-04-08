@@ -4,12 +4,13 @@ import { Button, Container, makeStyles, Theme } from '@material-ui/core'
 import { green } from '@material-ui/core/colors'
 import { useAction, useAtom } from '@reatom/react'
 import {
-  blinkInCountingArrayReaction,
+  blinkReaction,
   countingArray,
   initialArray,
   moveContainerAction,
   rootAtom,
   setNumberOfElementsInCountingArrayAction,
+  setSelectedAction,
   setValueInCountingArrayAction
 } from './model'
 import ArrayElementPortal from './components/ArrayElementPortal'
@@ -19,6 +20,7 @@ import CountingArray from './components/CountingArray'
 import cn from 'classnames'
 import { sleep } from './helpers'
 import PlayButton from './components/PlayButton'
+import ResultArray from './components/ResultArray'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     gap: '1rem',
     placeItems: 'center',
     opacity: 100,
-    paddingTop: '10rem',
+    paddingTop: '4rem',
     transition: theme.transitions.create(['opacity'], {
       duration: 1000,
       easing: 'ease'
@@ -57,7 +59,8 @@ const App = () => {
 
   const atom = useAtom(rootAtom)
   const moveContainer = useAction(moveContainerAction)
-  const blinkInCountingArray = useAction(blinkInCountingArrayReaction)
+  const setSelected = useAction(setSelectedAction)
+  const blink = useAction(blinkReaction)
   const setValueInCountingArray = useAction(setValueInCountingArrayAction)
   const setNumberOfElementsInCountingArray = useAction(setNumberOfElementsInCountingArrayAction)
 
@@ -75,7 +78,7 @@ const App = () => {
       index: countingArrayIndex,
       payload: countingArrayValue
     })
-    blinkInCountingArray({ index: countingArrayIndex })
+    blink({ index: countingArrayIndex, array: 'countingArray', type: 'selected' })
     setNumberOfElementsInCountingArray({
       index: countingArrayIndex,
       payload: countingArrayNumberOfElements
@@ -83,15 +86,45 @@ const App = () => {
   }
 
   const sumNext = async (index: number, value: number, nextValue: number) => {
-    blinkInCountingArray({ index })
-    blinkInCountingArray({ index: index + 1 })
+    blink({ index, array: 'countingArray', type: 'selected' })
+    blink({ index: index + 1, array: 'countingArray', type: 'selected' })
     await sleep(600)
     setValueInCountingArray({
       index: index + 1,
       payload: value + nextValue
     })
-    blinkInCountingArray({ index: index + 1 })
+    blink({ index: index + 1, array: 'countingArray', type: 'selected' })
     await sleep(300)
+  }
+
+  const setNewPosition = async (initialArrayIndex: number, countingArrayIndex: number, resultArrayIndex: number) => {
+    debugger
+    setSelected({
+      index: initialArrayIndex,
+      array: 'initialArray',
+      payload: true,
+      type: 'selected'
+    })
+    setSelected({
+      index: countingArrayIndex,
+      array: 'countingArray',
+      payload: true,
+      type: 'selected'
+    })
+    await sleep(1000)
+    setSelected({
+      index: initialArrayIndex,
+      array: 'initialArray',
+      payload: false,
+      type: 'selected'
+    })
+    setSelected({
+      index: resultArrayIndex,
+      array: 'resultArray',
+      payload: true,
+      type: 'indexSelected'
+    })
+    await sleep(1000)
   }
 
   const steps = useCallback(async function* steps() {
@@ -103,16 +136,21 @@ const App = () => {
       setDisabled(true)
       moveElement(index++, value, ++countingArr[value], countingArr[value])
       setDisabled(false)
-      yield
+      // yield
     }
 
-    for (let i = 0; i < countingArr.length - 1; ++i) {
-      setDisabled(true)
-      await sumNext(i, countingArr[i], countingArr[i + 1])
-      countingArr[i + 1] = countingArr[i] + countingArr[i + 1]
-      setDisabled(false)
-      yield
-    }
+    // for (let i = 0; i < countingArr.length - 1; ++i) {
+    //   setDisabled(true)
+    //   await sumNext(i, countingArr[i], countingArr[i + 1])
+    //   countingArr[i + 1] = countingArr[i] + countingArr[i + 1]
+    //   setDisabled(false)
+    //   // yield
+    // }
+    yield
+    await setNewPosition(0, 7, 10)
+    yield
+    await setNewPosition(1, 5, 12)
+    yield
   }, [])
 
   const generator = useMemo(() => steps(), [])
@@ -134,6 +172,7 @@ const App = () => {
             <PlayButton disabled={disabled} onClick={() => generator.next()} />
             <InitialArray state={atom.initialArray} />
             <CountingArray state={atom.countingArray} />
+            <ResultArray state={atom.resultArray} />
             {atom.containers.map((item, index) => (
               <ArrayContainerPortal key={index} index={index} container={item.containerRef.current} />
             ))}
