@@ -11,15 +11,14 @@ import { createRefMap } from './utils'
 import { IState } from './types'
 import { random } from 'lodash'
 
-// export const initialArray = Array.from({ length: 15 }).map(_ => random(0, 9))
-export const initialArray = [3, 3, 3, 2, 2, 1]
-export const countingArray = Array.from({ length: 4 }).map(_ => 0)
+export const initialArray = Array.from({ length: 15 }).map(_ => random(0, 15))
+export const countingArray = Array.from({ length: 16 }).map(_ => 0)
 
 const refs = {
   elements: createRefMap(initialArray.length),
   containers: createRefMap(initialArray.length),
   initialArray: createRefMap(initialArray.length),
-  countingArray: createRefMap(10),
+  countingArray: createRefMap(16),
   resultArray: createRefMap(initialArray.length)
 }
 

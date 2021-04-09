@@ -99,7 +99,13 @@ const App = () => {
     await sleep(300)
   }
 
-  const setNewPosition = async (initialArrayIndex: number, countingArrayIndex: number, resultArrayIndex: number) => {
+  const setNewPosition = async (
+    initialArrayIndex: number,
+    countingArrayIndex: number,
+    resultArrayIndex: number,
+    elements: number,
+    initialArr: number[]
+  ) => {
     setSelected({
       index: initialArrayIndex,
       array: 'initialArray',
@@ -113,7 +119,7 @@ const App = () => {
       payload: true,
       type: 'indexSelected'
     })
-    await sleep(500)
+    await sleep(1000)
     setSelected({
       index: countingArrayIndex,
       array: 'countingArray',
@@ -126,20 +132,6 @@ const App = () => {
       array: 'resultArray',
       payload: true,
       type: 'indexSelected'
-    })
-    await sleep(500)
-    moveContainer({
-      index: initialArrayIndex,
-      containerRef: atom.resultArray[resultArrayIndex - 1].ref
-    })
-    setValueInCountingArray({
-      index: countingArrayIndex,
-      payload: atom.countingArray[countingArrayIndex].value - 1
-    })
-    blink({ index: countingArrayIndex, array: 'countingArray', type: 'selected' })
-    setNumberOfElementsInCountingArray({
-      index: countingArrayIndex,
-      payload: atom.countingArray[countingArrayIndex].numberOfElements - 1
     })
     await sleep(1000)
     setSelected({
@@ -154,6 +146,23 @@ const App = () => {
       payload: false,
       type: 'indexSelected'
     })
+    await sleep(500)
+    const initialLastIndex = initialArr.lastIndexOf(initialArray[initialArrayIndex])
+    initialArr[initialLastIndex] = 999
+    moveContainer({
+      index: initialLastIndex,
+      containerRef: atom.resultArray[resultArrayIndex - 1].ref
+    })
+    setValueInCountingArray({
+      index: countingArrayIndex,
+      payload: resultArrayIndex - 1
+    })
+    blink({ index: countingArrayIndex, array: 'countingArray', type: 'selected' })
+    setNumberOfElementsInCountingArray({
+      index: countingArrayIndex,
+      payload: elements
+    })
+    await sleep(1000)
     setSelected({
       index: countingArrayIndex,
       array: 'countingArray',
@@ -171,11 +180,13 @@ const App = () => {
   const steps = useCallback(async function* steps() {
     const initialArr = [...initialArray]
     const countingArr = [...countingArray]
+    const elementsInCountingArr = [...countingArray]
 
     let index = 0
     for (const value of initialArr) {
       setDisabled(true)
       moveElement(index++, value, ++countingArr[value], countingArr[value], 'countingArray')
+      elementsInCountingArr[value]++
       setDisabled(false)
       yield
     }
@@ -188,9 +199,16 @@ const App = () => {
       yield
     }
 
+    const initialArrCopy = [...initialArr]
     for (let i = 0; i < initialArr.length; ++i) {
       setDisabled(true)
-      await setNewPosition(i, initialArr[i], countingArr[initialArr[i]]--)
+      await setNewPosition(
+        i,
+        initialArr[i],
+        countingArr[initialArr[i]]--,
+        --elementsInCountingArr[initialArr[i]],
+        initialArrCopy
+      )
       setDisabled(false)
       yield
     }

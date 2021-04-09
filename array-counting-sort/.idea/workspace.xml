@@ -1,30 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb13472b-f62a-43f3-900a-4f190ce927e1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CountingArray.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CountingArray.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/actions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/IndexItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/IndexItem.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/atoms.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/atoms.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +58,7 @@
       <recent name="C:\Users\scrinpwnz\Documents\_IT\_work\learning\takeoff-staff-articles\array-counting-sort\src\components" />
     </key>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -222,10 +206,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1617888761910" />
-    <state x="821" y="282" width="618" height="592" key="find.popup" timestamp="1617965459597">
+    <state x="821" y="282" width="618" height="592" key="find.popup" timestamp="1617980910325">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="821" y="282" width="618" height="592" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1617965459597" />
+    <state x="821" y="282" width="618" height="592" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1617980910325" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1617682734031">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

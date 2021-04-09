@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   indexSelected: {
     color: purple[900],
-    fontSize: '2rem'
+    fontSize: '3rem'
   }
 }))
 
