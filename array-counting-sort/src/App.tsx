@@ -21,6 +21,7 @@ import cn from 'classnames'
 import { sleep } from './helpers'
 import PlayButton from './components/PlayButton'
 import ResultArray from './components/ResultArray'
+import { cloneDeep } from 'lodash'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -66,21 +67,22 @@ const App = () => {
 
   const moveElement = (
     index: number,
-    countingArrayIndex: number,
+    arrayIndex: number,
     countingArrayValue: number,
-    countingArrayNumberOfElements: number
+    countingArrayNumberOfElements: number,
+    to: 'countingArray' | 'resultArray'
   ) => {
     moveContainer({
       index,
-      containerRef: atom.countingArray[countingArrayIndex].ref
+      containerRef: atom[to][arrayIndex].ref
     })
     setValueInCountingArray({
-      index: countingArrayIndex,
+      index: arrayIndex,
       payload: countingArrayValue
     })
-    blink({ index: countingArrayIndex, array: 'countingArray', type: 'selected' })
+    blink({ index: arrayIndex, array: 'countingArray', type: 'selected' })
     setNumberOfElementsInCountingArray({
-      index: countingArrayIndex,
+      index: arrayIndex,
       payload: countingArrayNumberOfElements
     })
   }
@@ -98,18 +100,46 @@ const App = () => {
   }
 
   const setNewPosition = async (initialArrayIndex: number, countingArrayIndex: number, resultArrayIndex: number) => {
-    debugger
     setSelected({
       index: initialArrayIndex,
       array: 'initialArray',
       payload: true,
       type: 'selected'
     })
+    await sleep(500)
+    setSelected({
+      index: countingArrayIndex,
+      array: 'countingArray',
+      payload: true,
+      type: 'indexSelected'
+    })
+    await sleep(500)
     setSelected({
       index: countingArrayIndex,
       array: 'countingArray',
       payload: true,
       type: 'selected'
+    })
+    await sleep(500)
+    setSelected({
+      index: resultArrayIndex - 1,
+      array: 'resultArray',
+      payload: true,
+      type: 'indexSelected'
+    })
+    await sleep(500)
+    moveContainer({
+      index: initialArrayIndex,
+      containerRef: atom.resultArray[resultArrayIndex - 1].ref
+    })
+    setValueInCountingArray({
+      index: countingArrayIndex,
+      payload: atom.countingArray[countingArrayIndex].value - 1
+    })
+    blink({ index: countingArrayIndex, array: 'countingArray', type: 'selected' })
+    setNumberOfElementsInCountingArray({
+      index: countingArrayIndex,
+      payload: atom.countingArray[countingArrayIndex].numberOfElements - 1
     })
     await sleep(1000)
     setSelected({
@@ -119,12 +149,23 @@ const App = () => {
       type: 'selected'
     })
     setSelected({
-      index: resultArrayIndex,
-      array: 'resultArray',
-      payload: true,
+      index: countingArrayIndex,
+      array: 'countingArray',
+      payload: false,
       type: 'indexSelected'
     })
-    await sleep(1000)
+    setSelected({
+      index: countingArrayIndex,
+      array: 'countingArray',
+      payload: false,
+      type: 'selected'
+    })
+    setSelected({
+      index: resultArrayIndex - 1,
+      array: 'resultArray',
+      payload: false,
+      type: 'indexSelected'
+    })
   }
 
   const steps = useCallback(async function* steps() {
@@ -134,23 +175,25 @@ const App = () => {
     let index = 0
     for (const value of initialArr) {
       setDisabled(true)
-      moveElement(index++, value, ++countingArr[value], countingArr[value])
+      moveElement(index++, value, ++countingArr[value], countingArr[value], 'countingArray')
       setDisabled(false)
-      // yield
+      yield
     }
 
-    // for (let i = 0; i < countingArr.length - 1; ++i) {
-    //   setDisabled(true)
-    //   await sumNext(i, countingArr[i], countingArr[i + 1])
-    //   countingArr[i + 1] = countingArr[i] + countingArr[i + 1]
-    //   setDisabled(false)
-    //   // yield
-    // }
-    yield
-    await setNewPosition(0, 7, 10)
-    yield
-    await setNewPosition(1, 5, 12)
-    yield
+    for (let i = 0; i < countingArr.length - 1; ++i) {
+      setDisabled(true)
+      await sumNext(i, countingArr[i], countingArr[i + 1])
+      countingArr[i + 1] = countingArr[i] + countingArr[i + 1]
+      setDisabled(false)
+      yield
+    }
+
+    for (let i = 0; i < initialArr.length; ++i) {
+      setDisabled(true)
+      await setNewPosition(i, initialArr[i], countingArr[initialArr[i]]--)
+      setDisabled(false)
+      yield
+    }
   }, [])
 
   const generator = useMemo(() => steps(), [])

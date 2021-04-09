@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BranchesTreeState">
-    <expand />
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
     <select />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb13472b-f62a-43f3-900a-4f190ce927e1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/IndexItem.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/ResultArray.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.husky/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.husky/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ArrayElementPlaceholder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ArrayElementPlaceholder.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/CountingArray.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CountingArray.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/InitialArray.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InitialArray.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/actions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/atoms.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/atoms.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +66,7 @@
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="ts.external.directory.path" value="C:\Users\scrinpwnz\Documents\_IT\_work\learning\takeoff-staff-articles\array-counting-sort\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Users\scrinpwnz\Documents\_IT\_work\takeoff-staff-articles\array-counting-sort\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -65,7 +74,7 @@
       <recent name="C:\Users\scrinpwnz\Documents\_IT\_work\learning\takeoff-staff-articles\array-counting-sort\src\components" />
     </key>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -84,9 +93,11 @@
       <workItem from="1617597502032" duration="47000" />
       <workItem from="1617597580632" duration="10807000" />
       <workItem from="1617613988743" duration="8641000" />
-      <workItem from="1617676013915" duration="12519000" />
+      <workItem from="1617676013915" duration="12663000" />
+      <workItem from="1617951146951" duration="593000" />
       <workItem from="1617789211665" duration="188000" />
       <workItem from="1617876734704" duration="12928000" />
+      <workItem from="1617961729009" duration="8128000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1617626358590</created>
@@ -116,11 +127,18 @@
       <option name="project" value="LOCAL" />
       <updated>1617680540577</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="update">
+      <created>1617692525008</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1617692525008</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -162,16 +180,16 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="update" />
     <MESSAGE value="test" />
     <MESSAGE value="prettier" />
-    <option name="LAST_COMMIT_MESSAGE" value="prettier" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="513" y="88" key="CommitChangelistDialog2" timestamp="1617680527534">
+    <state x="513" y="88" key="CommitChangelistDialog2" timestamp="1617692512676">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="513" y="88" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1617680527534" />
+    <state x="513" y="88" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1617692512676" />
     <state width="1899" height="290" key="GridCell.Tab.0.bottom" timestamp="1617888306481">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -192,10 +210,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="681" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1617889530090" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1617680545824">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1617692530524">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1617680545824" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1617692530524" />
     <state x="565" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1617293779875">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -204,10 +222,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1617888761910" />
-    <state x="821" y="282" width="618" height="592" key="find.popup" timestamp="1617898911643">
+    <state x="821" y="282" width="618" height="592" key="find.popup" timestamp="1617965459597">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="821" y="282" width="618" height="592" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1617898911643" />
+    <state x="821" y="282" width="618" height="592" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1617965459597" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1617682734031">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

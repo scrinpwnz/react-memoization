@@ -11,8 +11,9 @@ import { createRefMap } from './utils'
 import { IState } from './types'
 import { random } from 'lodash'
 
-export const initialArray = Array.from({ length: 15 }).map(_ => random(0, 9))
-export const countingArray = Array.from({ length: 10 }).map(_ => 0)
+// export const initialArray = Array.from({ length: 15 }).map(_ => random(0, 9))
+export const initialArray = [3, 3, 3, 2, 2, 1]
+export const countingArray = Array.from({ length: 4 }).map(_ => 0)
 
 const refs = {
   elements: createRefMap(initialArray.length),
@@ -88,6 +89,9 @@ export const rootAtom = declareAtom('rootAtom', initialState, on => [
       ...state[array][index],
       [type]: payload
     }
-    return { ...state }
+    return {
+      ...state,
+      [array]: [...state[array]]
+    }
   })
 ])

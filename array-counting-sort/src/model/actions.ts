@@ -53,8 +53,8 @@ export const setSelectedAction = declareAction<ISetSelectedPayload>()
 export const blinkReaction = declareAction<IBlinkPayload>(
   'blinkReaction',
   async ({ index, timeout = 300, type }, { dispatch }) => {
-    dispatch(setSelectedAction({ index, payload: true, array: 'countingArray', type: 'indexSelected' }))
+    dispatch(setSelectedAction({ index, payload: true, array: 'countingArray', type }))
     await sleep(timeout)
-    dispatch(setSelectedAction({ index, payload: false, array: 'countingArray', type: 'indexSelected' }))
+    dispatch(setSelectedAction({ index, payload: false, array: 'countingArray', type }))
   }
 )

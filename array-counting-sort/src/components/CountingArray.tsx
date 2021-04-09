@@ -78,7 +78,6 @@ const CountingArray: FC<Props> = ({ state }) => {
   return (
     <Paper className={classes.root} elevation={6}>
       {state.map((item, index) => {
-        console.log('tsts')
         return (
           <div>
             <Paper className={cn(classes.item, { [classes.selected]: item.selected })} variant={'outlined'}>
