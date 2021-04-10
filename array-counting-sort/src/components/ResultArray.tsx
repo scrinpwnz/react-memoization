@@ -29,8 +29,8 @@ const ResultArray: FC<Props> = memo(({ state }) => {
   return (
     <Paper elevation={6} className={classes.root}>
       {state.map((item, index) => (
-        <div>
-          <div key={index} className={classes.spot} ref={item.ref}>
+        <div key={index}>
+          <div className={classes.spot} ref={item.ref}>
             <ArrayElementPlaceholder selected={item.selected} />
           </div>
           <IndexItem index={index + 1} selected={item.indexSelected} />

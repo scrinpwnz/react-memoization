@@ -1,6 +1,7 @@
 import { RefObject } from 'react'
 
 export interface IState {
+  domReady: boolean
   elements: IElement[]
   containers: IContainer[]
   initialArray: IArrayItem[]

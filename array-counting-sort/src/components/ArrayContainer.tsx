@@ -20,7 +20,7 @@ const ArrayContainer: FC<Props> = memo(({ index }) => {
   const classes = useStyles()
 
   useEffect(() => {
-    console.log(`'Контейнер ${index} родился!`)
+    debugger
     rerenderElement(index)
   }, [])
 

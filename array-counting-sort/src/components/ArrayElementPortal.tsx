@@ -8,8 +8,6 @@ interface Props {
 }
 
 const ArrayElementPortal: FC<Props> = memo(({ index, container }) => {
-  console.log('[ArrayElementPortal]', { container })
-
   if (!container) return null
 
   return createPortal(<ArrayElement index={index} />, container)

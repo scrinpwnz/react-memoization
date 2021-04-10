@@ -4,7 +4,7 @@ import { ICountingArrayItem } from '../model'
 import { animated, config, Spring } from 'react-spring'
 import { purple } from '@material-ui/core/colors'
 import cn from 'classnames'
-import { createThrottler } from '../helpers/createThrottler'
+import { createDebounce } from '../helpers/createDebounce'
 import IndexItem from './IndexItem'
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -66,7 +66,7 @@ const CountingArray: FC<Props> = ({ state }) => {
     setWindowModifier(getWindowModifier())
   }, [])
 
-  const setHeightModifierListenerThrottler = useMemo(() => createThrottler(setHeightModifierListener, 200), [])
+  const setHeightModifierListenerThrottler = useMemo(() => createDebounce(setHeightModifierListener, 200), [])
 
   useEffect(() => {
     window.addEventListener('resize', setHeightModifierListenerThrottler)
@@ -79,7 +79,7 @@ const CountingArray: FC<Props> = ({ state }) => {
     <Paper className={classes.root} elevation={6}>
       {state.map((item, index) => {
         return (
-          <div>
+          <div key={index}>
             <Paper className={cn(classes.item, { [classes.selected]: item.selected })} variant={'outlined'}>
               <Typography variant={'h4'} color={'inherit'} align={'center'}>
                 {item.value}

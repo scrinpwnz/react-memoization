@@ -5,7 +5,7 @@ import cn from 'classnames'
 import { animated, config, Spring } from 'react-spring'
 import { useAction, useAtom } from '@reatom/react'
 import { rootAtom, setElementPositionAction } from '../model'
-import { createThrottler } from '../helpers/createThrottler'
+import { createDebounce } from '../helpers/createDebounce'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -57,21 +57,23 @@ const ArrayElement: FC<Props> = memo(({ index }) => {
 
   const setElementPositionListener = useCallback(() => {
     const position = getPosition(element.containerRef.current?.getBoundingClientRect())
-    console.log(`Изменение позиции элемента ${index} [${position.top}, ${position.left}]`)
     setElementPosition({
       index,
       position
     })
   }, [])
 
-  const setElementPositionListenerThrottler = useMemo(() => createThrottler(setElementPositionListener, 200), [])
+  const setElementPositionListenerDebounce = useMemo(() => createDebounce(setElementPositionListener, 200), [])
 
   useEffect(() => {
-    console.log(`Элемент ${index} родился на позиции [${position.top}, ${position.left}]`)
-    setElementPositionListenerThrottler()
-    window.addEventListener('resize', setElementPositionListenerThrottler)
+    setElementPositionListenerDebounce()
+  }, [element])
+
+  useEffect(() => {
+    setElementPositionListenerDebounce()
+    window.addEventListener('resize', setElementPositionListenerDebounce)
     return () => {
-      window.removeEventListener('resize', setElementPositionListenerThrottler)
+      window.removeEventListener('resize', setElementPositionListenerDebounce)
     }
   }, [])
 

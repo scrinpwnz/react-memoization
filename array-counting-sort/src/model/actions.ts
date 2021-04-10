@@ -3,6 +3,8 @@ import { RefObject } from 'react'
 import { IPosition, IState } from './types'
 import { sleep } from '../helpers'
 
+export const setDomReadyAction = declareAction<boolean>()
+
 export interface MoveContainerPayload {
   index: number
   containerRef: RefObject<HTMLDivElement>
@@ -32,7 +34,7 @@ export const setNumberOfElementsInCountingArrayAction = declareAction<{
 export const rerenderElementAction = declareAction<number>()
 
 interface IArrayPayload {
-  array: keyof Omit<IState, 'elements' | 'containers'>
+  array: keyof Omit<IState, 'elements' | 'containers' | 'domReady'>
   index: number
 }
 

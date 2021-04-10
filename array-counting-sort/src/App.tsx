@@ -8,6 +8,7 @@ import {
   countingArray,
   initialArray,
   moveContainerAction,
+  rerenderElementAction,
   rootAtom,
   setNumberOfElementsInCountingArrayAction,
   setSelectedAction,
@@ -21,7 +22,8 @@ import cn from 'classnames'
 import { sleep } from './helpers'
 import PlayButton from './components/PlayButton'
 import ResultArray from './components/ResultArray'
-import { cloneDeep } from 'lodash'
+import TutorialText from './components/TutorialText'
+import { config, useTrail, animated } from 'react-spring'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -55,8 +57,9 @@ const App = () => {
   const [updateCount, setUpdateCount] = useState(0)
   const [ready, setReady] = useState(false)
   const [disabled, setDisabled] = useState(false)
-
-  console.count('App')
+  const [text, setText] = useState(
+    'Представим, что данные, которые нужно отсортировать, находятся в пределах от 0 до 9.'
+  )
 
   const atom = useAtom(rootAtom)
   const moveContainer = useAction(moveContainerAction)
@@ -64,6 +67,7 @@ const App = () => {
   const blink = useAction(blinkReaction)
   const setValueInCountingArray = useAction(setValueInCountingArrayAction)
   const setNumberOfElementsInCountingArray = useAction(setNumberOfElementsInCountingArrayAction)
+  const rerenderElement = useAction(rerenderElementAction)
 
   const moveElement = (
     index: number,
@@ -133,22 +137,13 @@ const App = () => {
       payload: true,
       type: 'indexSelected'
     })
-    await sleep(1000)
-    setSelected({
-      index: initialArrayIndex,
-      array: 'initialArray',
-      payload: false,
-      type: 'selected'
-    })
-    setSelected({
-      index: countingArrayIndex,
-      array: 'countingArray',
-      payload: false,
-      type: 'indexSelected'
-    })
+
     await sleep(500)
     const initialLastIndex = initialArr.lastIndexOf(initialArray[initialArrayIndex])
     initialArr[initialLastIndex] = 999
+    rerenderElement(initialLastIndex)
+    await sleep(500)
+
     moveContainer({
       index: initialLastIndex,
       containerRef: atom.resultArray[resultArrayIndex - 1].ref
@@ -162,7 +157,20 @@ const App = () => {
       index: countingArrayIndex,
       payload: elements
     })
-    await sleep(1000)
+
+    await sleep(500)
+    setSelected({
+      index: initialArrayIndex,
+      array: 'initialArray',
+      payload: false,
+      type: 'selected'
+    })
+    setSelected({
+      index: countingArrayIndex,
+      array: 'countingArray',
+      payload: false,
+      type: 'indexSelected'
+    })
     setSelected({
       index: countingArrayIndex,
       array: 'countingArray',
@@ -216,32 +224,61 @@ const App = () => {
 
   const generator = useMemo(() => steps(), [])
 
-  useEffect(() => {
-    if (updateCount < 2) {
-      forceUpdate()
-      setUpdateCount(updateCount + 1)
-    } else {
-      setReady(true)
-    }
-  }, [updateCount])
+  // useEffect(() => {
+  //   if (updateCount < 2) {
+  //     forceUpdate()
+  //     setUpdateCount(updateCount + 1)
+  //   } else {
+  //     setReady(true)
+  //   }
+  // }, [updateCount])
+
+  const arrayComponents = [
+    <PlayButton disabled={disabled} onClick={() => generator.next()} />,
+    <InitialArray state={atom.initialArray} />,
+    <CountingArray state={atom.countingArray} />,
+    <ResultArray state={atom.resultArray} />
+  ]
+
+  const trail = useTrail(arrayComponents.length, {
+    config: config.molasses,
+    from: {
+      transform: 'translate3d(0px, -100px, 0px)',
+      opacity: 0
+    },
+    to: {
+      transform: 'translate3d(0px,0px,0px)',
+      opacity: 1
+    },
+    delay: 1000
+  })
+
+  const algorithmShowcase = (
+    <div className={classes.content}>
+      <TutorialText text={text} />
+      <Button onClick={() => setText('а это новый текст')}>test</Button>
+      {trail.map((props, index) => {
+        return (
+          <animated.div style={props} key={index}>
+            {arrayComponents[index]}
+          </animated.div>
+        )
+      })}
+      {ready &&
+        atom.containers.map((item, index) => (
+          <ArrayContainerPortal key={index} index={index} container={item.containerRef.current} />
+        ))}
+      {ready &&
+        atom.elements.map((item, index) => (
+          <ArrayElementPortal key={index} index={index} container={item.containerRef.current} />
+        ))}
+    </div>
+  )
 
   return (
     <div className={classes.root}>
       <div className={classes.mainContainer}>
-        <Container maxWidth={'md'}>
-          <div className={cn(classes.content, { [classes.hidden]: !ready })}>
-            <PlayButton disabled={disabled} onClick={() => generator.next()} />
-            <InitialArray state={atom.initialArray} />
-            <CountingArray state={atom.countingArray} />
-            <ResultArray state={atom.resultArray} />
-            {atom.containers.map((item, index) => (
-              <ArrayContainerPortal key={index} index={index} container={item.containerRef.current} />
-            ))}
-            {atom.elements.map((item, index) => (
-              <ArrayElementPortal key={index} index={index} container={item.containerRef.current} />
-            ))}
-          </div>
-        </Container>
+        <Container maxWidth={'md'}>{algorithmShowcase}</Container>
       </div>
     </div>
   )
