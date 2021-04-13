@@ -20,7 +20,6 @@ const ArrayContainer: FC<Props> = memo(({ index }) => {
   const classes = useStyles()
 
   useEffect(() => {
-    debugger
     rerenderElement(index)
   }, [])
 

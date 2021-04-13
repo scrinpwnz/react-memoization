@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   text: {
     fontWeight: 700,
-    color: purple[900]
+    color: theme.palette.background.paper
   }
 }))
 
@@ -64,7 +64,7 @@ const TutorialText: FC<Props> = ({ text }) => {
     )
   })
 
-  return <div className={classes.root}>{trailComponent}</div>
+  return transitionsComponent
 }
 
 export default TutorialText

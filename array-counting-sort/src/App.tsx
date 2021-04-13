@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import InitialArray from './components/InitialArray'
-import { Button, Container, makeStyles, Theme } from '@material-ui/core'
-import { green } from '@material-ui/core/colors'
+import { makeStyles, Theme } from '@material-ui/core'
 import { useAction, useAtom } from '@reatom/react'
 import {
   blinkReaction,
@@ -17,22 +15,24 @@ import {
 import ArrayElementPortal from './components/ArrayElementPortal'
 import { useForceUpdate } from './hooks'
 import ArrayContainerPortal from './components/ArrayContainerPortal'
-import CountingArray from './components/CountingArray'
-import cn from 'classnames'
 import { sleep } from './helpers'
-import PlayButton from './components/PlayButton'
-import ResultArray from './components/ResultArray'
 import TutorialText from './components/TutorialText'
-import { config, useTrail, animated } from 'react-spring'
+import { animated, config, useSprings, UseSpringsProps } from 'react-spring'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100vh',
-    background: green[200]
+    backgroundImage: `linear-gradient(112.1deg, rgba(32,38,57,1) 11.4%, rgba(63,76,119,1) 70.2%)`
   },
   mainContainer: {
     height: '100%',
+    position: 'relative',
     overflowY: 'auto'
+  },
+  mainTitle: {
+    display: 'grid',
+    placeItems: 'center',
+    height: '100%'
   },
   content: {
     display: 'flex',
@@ -57,9 +57,7 @@ const App = () => {
   const [updateCount, setUpdateCount] = useState(0)
   const [ready, setReady] = useState(false)
   const [disabled, setDisabled] = useState(false)
-  const [text, setText] = useState(
-    'Представим, что данные, которые нужно отсортировать, находятся в пределах от 0 до 9.'
-  )
+  const [mainTitleActive, setMainTitleActive] = useState(true)
 
   const atom = useAtom(rootAtom)
   const moveContainer = useAction(moveContainerAction)
@@ -233,53 +231,105 @@ const App = () => {
   //   }
   // }, [updateCount])
 
-  const arrayComponents = [
-    <PlayButton disabled={disabled} onClick={() => generator.next()} />,
-    <InitialArray state={atom.initialArray} />,
-    <CountingArray state={atom.countingArray} />,
-    <ResultArray state={atom.resultArray} />
-  ]
+  useEffect(() => {
+    ;(async () => {
+      await sleep(5000)
+      setMainTitleActive(false)
+    })()
+  }, [])
 
-  const trail = useTrail(arrayComponents.length, {
-    config: config.molasses,
-    from: {
-      transform: 'translate3d(0px, -100px, 0px)',
-      opacity: 0
-    },
-    to: {
-      transform: 'translate3d(0px,0px,0px)',
-      opacity: 1
-    },
-    delay: 1000
-  })
+  interface IShowcaseItems {
+    [key: string]: {
+      component: React.ReactElement
+      props: UseSpringsProps
+    }
+  }
+
+  const showcaseItems: IShowcaseItems = {
+    text_0: {
+      component: <TutorialText text={'Алгоритм сортировки подсчётом'} />,
+      props: {
+        from: { opacity: 0 },
+        to: { opacity: 1 }
+      }
+    }
+    // text_1: {
+    //   component: <TutorialText text={'Представим, что данные, которые нужно отсортировать, находятся в пределах от 0 до 9.'}/>,
+    //   props: {
+    //     from: { opacity: 0 },
+    //     to: { opacity: 1 }
+    //   }
+    // },
+    // playButton: {
+    //   component: <PlayButton disabled={disabled} onClick={() => generator.next()}/>,
+    //   props: {
+    //     from: { opacity: 0 },
+    //     to: { opacity: 1 },
+    //     delay: 1000
+    //   }
+    // },
+    // initialArray: {
+    //   component: <InitialArray state={atom.initialArray}/>,
+    //   props: {
+    //     from: { opacity: 0 },
+    //     to: { opacity: 1 },
+    //     delay: 2000
+    //   }
+    // },
+    // countingArray: {
+    //   component: <CountingArray state={atom.countingArray}/>,
+    //   props: {
+    //     from: { opacity: 0 },
+    //     to: { opacity: 1 },
+    //     delay: 2000
+    //   }
+    // },
+    // resultArray: {
+    //   component: <ResultArray state={atom.resultArray}/>,
+    //   props: {
+    //     from: { opacity: 0 },
+    //     to: { opacity: 1 },
+    //     delay: 2000
+    //   }
+    // }
+  }
+
+  const showcaseItemsArray = Object.values(showcaseItems)
+
+  const springs = useSprings(
+    showcaseItemsArray.length,
+    showcaseItemsArray.map(item => ({ config: config.molasses, ...item.props }))
+  )
 
   const algorithmShowcase = (
     <div className={classes.content}>
-      <TutorialText text={text} />
-      <Button onClick={() => setText('а это новый текст')}>test</Button>
-      {trail.map((props, index) => {
+      {springs.map((props, index) => {
         return (
           <animated.div style={props} key={index}>
-            {arrayComponents[index]}
+            {showcaseItemsArray[index].component}
           </animated.div>
         )
       })}
-      {ready &&
-        atom.containers.map((item, index) => (
-          <ArrayContainerPortal key={index} index={index} container={item.containerRef.current} />
-        ))}
-      {ready &&
-        atom.elements.map((item, index) => (
-          <ArrayElementPortal key={index} index={index} container={item.containerRef.current} />
-        ))}
     </div>
   )
 
   return (
     <div className={classes.root}>
-      <div className={classes.mainContainer}>
-        <Container maxWidth={'md'}>{algorithmShowcase}</Container>
-      </div>
+      {mainTitleActive ? (
+        <div className={classes.mainTitle}>
+          <TutorialText text={'Алгоритм сортировки подсчётом'} />
+        </div>
+      ) : (
+        <>
+          <div className={classes.mainContainer}>{algorithmShowcase}</div>
+          {atom.containers.map((item, index) => (
+            <ArrayContainerPortal key={index} index={index} container={item.containerRef.current} />
+          ))}
+          {atom.elements.map((item, index) => (
+            <ArrayElementPortal key={index} index={index} container={item.containerRef.current} />
+          ))}
+        </>
+      )}
     </div>
   )
 }
